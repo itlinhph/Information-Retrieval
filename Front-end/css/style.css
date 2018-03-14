@@ -1,0 +1,37 @@
+body {
+  background-color: black;
+  margin: 20px 100px 20px 100px ;
+}
+
+.title {
+  font-family: Lobster;
+  font-size: 60px;
+  color: red;
+}
+.content{
+  margin: 50px 30px;
+}
+.content div{
+  border: #808080 solid 1px;
+  margin: 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+span{
+  font-size: 30px;
+  font-family: "Time new roman";
+  font-style: italic;
+}
+p {
+  color: antiquewhite ;
+}
+
+.btn {
+  width: 100%
+}
+
+#form-search {
+  height: 40px;
+  width: 90% ;
+  margin: auto ;
+}
