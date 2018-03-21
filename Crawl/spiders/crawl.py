@@ -41,13 +41,10 @@ class ExampleSpider(scrapy.Spider):
     def parse_arc(self, response):
         self.arc_count+=1
         ts=str(time.time())
-
         url=response.url
-
         title = response.css("h1.title_news_detail::text").extract()
         if(len(title)!=0):
             title = title[0]
-
             text=""
             article=response.css("article.content_detail p")
             for p in article:
