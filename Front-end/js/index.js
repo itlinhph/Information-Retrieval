@@ -18,7 +18,9 @@ $(document).ready(function () {
       console.log(data)
       hightlight = data.highlighting ;
       // console.log(hightlight)
-
+      numdocs = data.response.docs.length ;
+      numdocs = "Khoảng " + numdocs + " kết quả." ;
+      $("#numdocs").html(numdocs) ;
       $.each(data.response.docs, function (a,v) {
         // console.log(v);
         id = v.id
@@ -29,8 +31,6 @@ $(document).ready(function () {
         // content += "..." + v.content[0].substr(-60) ;
         var html = '<a target=_blank href="' + v.url[0] + '"><div><span>' + v.title[0] + '</span></a><p>' + content + '</p></div>';
         
-        html = html.replace(/<em>/g,"<b>");
-        html = html.replace(/<\/em>/g,"</b>");
         $(".content").append(html);
       });
     });
