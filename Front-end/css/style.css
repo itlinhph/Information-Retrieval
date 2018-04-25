@@ -1,5 +1,5 @@
 body {
-  background-color: black;
+  /* background-color: black; */
   margin: 20px 100px 20px 100px ;
 }
 
@@ -9,11 +9,13 @@ body {
   color: red;
 }
 .content{
-  margin: 50px 30px;
+  /* margin: 50px 30px; */
+  text-align: justify;
 }
 .content div{
   border: #808080 solid 1px;
-  margin: 10px;
+      margin-top: 4%;
+    margin-bottom: 2%;
   padding: 10px 20px;
   border-radius: 5px;
 }
@@ -23,7 +25,7 @@ span{
   font-style: italic;
 }
 p {
-  color: antiquewhite ;
+  /* color: antiquewhite ; */
 }
 
 .btn {
@@ -32,6 +34,6 @@ p {
 
 #form-search {
   height: 40px;
-  width: 90% ;
+  width: 100% ;
   margin: auto ;
 }
