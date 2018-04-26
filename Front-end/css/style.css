@@ -1,4 +1,7 @@
 
+.bodytext {
+  min-height: 670px;
+}
 .hightlight {
    background-color: #fafafa;
     height: 100px;
@@ -17,16 +20,14 @@
   text-align: justify;
   font-size: 15px;
 }
-.content div{
-  border: #808080 solid 1px;
-  margin-top: 2%;
-  margin-bottom: 2%;
-  padding: 10px 10px;
-  border-radius: 5px;
-}
-div.content span{
+
+div.content span.doc-title {
   font-size: 18px;
-  /* font-style: italic; */
+  color: #1a0dab; 
+}
+
+div.content span.target-url {
+  color: #006621 ;
 }
 
 p em {
@@ -48,3 +49,6 @@ p em {
   color: #808080 ;
 }
 
+nav {
+  margin-left: 9%;
+}
