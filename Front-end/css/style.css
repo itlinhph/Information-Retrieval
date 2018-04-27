@@ -9,12 +9,13 @@
     padding-top: 20px;
  }
 
-.title {
+.home {
   font-family: Lobster;
   font-size: 25px;
   padding-left: 15% ;
   text-transform: uppercase;
   color: red;
+  float: left;
 }
 .content {
   /* margin: 50px 30px; */

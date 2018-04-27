@@ -1,16 +1,25 @@
 
 $(document).ready(function () {
+  var NUM_DOCS_PER_PAGE = 10 ;
+  var SUB_DOCS_LENGTH = 333 ;
+  var FULL_TEXT_LENGTH = 1111 ;
 
-  var listContent = {} ;
   $(".fulltext").hide();
 
   $("#form-search").submit(function (e) {
 
     e.preventDefault();
-    sendRequest(0,10) ;
+    sendRequest(0,NUM_DOCS_PER_PAGE) ;
 
   });
 
+  $(".home").click(function(e) {
+    $(".content").empty();
+    $(".pagination").empty();
+    $(".fulltext").hide();
+    $("#input-search").val("");
+    $("#numdocs").html("");
+  })
 
 
   function sendRequest (startRow, numRows) {
@@ -43,7 +52,7 @@ $(document).ready(function () {
       $("#numdocs").html('Khoảng ' + numdocs + ' kết quả. ('+qTime/1000+' giây)') ;
 
       // show pagination
-      var strPagination = '<li class="pagili" id="prev_' + (currentPage - 1) +'"> <a href="#" aria-label="Previous" ><span aria-hidden="true">&laquo;</span></a ></li>' ;
+      var strPagination = '<li class="pagili" id="prev_' + (currentPage - 1) +'"> <a href="#1" aria-label="Previous" ><span aria-hidden="true">&laquo;</span></a ></li>' ;
       var pagiSize = Math.floor(numdocs/10) ;
       var startPage =0;
       var endPage = pagiSize;
@@ -61,7 +70,7 @@ $(document).ready(function () {
         strPagination += '<li class="pagili" id="page_'+ i +'"><a href="#">'+ strPage +'</a></li>' ;
       }
 
-      strPagination += '<li class="pagili" id="next_'+(currentPage+1)+'"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>' ;
+      strPagination += '<li class="pagili" id="next_'+(currentPage+1)+'"><a href="#1" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>' ;
       $(".pagination").append(strPagination) ;
       $("#page_"+currentPage).addClass("active") ;
       // console.log(currentPage, pagiSize) ;
@@ -93,12 +102,12 @@ $(document).ready(function () {
         
         // evalue subContent to show view.
         var subContent ;
-        if(index_hlight>265 ) {
-          subContent = doc.content[0].substr(0, 233) + "..." + hightlight[id].content[0] + "...";
+        if(index_hlight> SUB_DOCS_LENGTH -100 ) {
+          subContent = doc.content[0].substr(0, SUB_DOCS_LENGTH -100) + "..." + hightlight[id].content[0] + "...";
         }
         else {
           var str1 = doc.content[0].substr(0, index_hlight) + hightlight[id].content[0] ;
-          subContent = str1 + doc.content[0].substr(str1.length, 333- str1.length ) + "..." ;
+          subContent = str1 + doc.content[0].substr(str1.length, SUB_DOCS_LENGTH- str1.length ) + "..." ;
         }
         
         idStr = id.replace(".", "_");
@@ -107,7 +116,7 @@ $(document).ready(function () {
         if (sort_url.length > 70)
           sort_url = sort_url.substr(0, 69) + "...";
         var html = '<div><a target="_blank" href="' + doc.url[0] + ' "><span class="doc-title">'
-                    + doc.title[0] + ' </span></a> <a href=#"' + idStr + '"><span class="readmore" id="'
+                    + doc.title[0] + ' </span></a> <a href=#1><span class="readmore" id="'
                     + idStr + '"> Xem Trước </span></a><p><span class="target-url">'
                     + sort_url + '</span><br>' + subContent + '</p><hr></div>';
 
@@ -118,7 +127,7 @@ $(document).ready(function () {
       // show read more
       $(".readmore").click(function (e) {
         id_click = e.target.id ;
-        fulltext = listContent[id_click].substr(0,1111) + "..." ;
+        fulltext = listContent[id_click].substr(0,FULL_TEXT_LENGTH) + "..." ;
     
         margintext = $("#" + id_click).offset().top - $(".result").offset().top - $(".result").scrollTop();
         
