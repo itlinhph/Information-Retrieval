@@ -39,11 +39,10 @@ $(document).ready(function () {
       
       // show number result
       var numdocs = data.response.numFound ;
-      var strNumdocs = "Khoảng " + numdocs + " kết quả." ;
-      $("#numdocs").html(strNumdocs) ;
+      $("#numdocs").html("Khoảng " + numdocs + " kết quả.") ;
 
       // show pagination
-      var strPagination = '<li> <a href="#" aria-label="Previous" ><span aria-hidden="true">&laquo;</span></a ></li>' ;
+      var strPagination = '<li class="pagili" id="pagex_' + (currentPage - 1) +'"> <a href="#" aria-label="Previous" ><span aria-hidden="true">&laquo;</span></a ></li>' ;
       var pagiSize = Math.floor(numdocs/10) ;
       if(pagiSize - currentPage > 9) {
         pagiSize = currentPage +9 ;
@@ -53,11 +52,11 @@ $(document).ready(function () {
         strPagination += '<li class="pagili" id="page_'+ i +'"><a href="#">'+ strPage +'</a></li>' ;
       }
 
-      strPagination += '<li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>' ;
+      strPagination += '<li class="pagili" id="pagex_'+(currentPage+1)+'"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>' ;
       $(".pagination").append(strPagination) ;
       $("#page_"+currentPage).addClass("active") ;
 
-      // show data
+      // show searched docs
       var docData = data.response.docs ;
 
       if(docData.length <numRows) {
@@ -99,6 +98,13 @@ $(document).ready(function () {
         $(".fulltext").html(fulltext) ;
 
       });
+
+      $(".pagili").click(function(e) {
+        var id = $(this).attr('id');
+        id = parseInt(id.substr(-1)) ;
+        sendRequest(id*10, 10);
+        
+      }) ;
     });
     // console.log(listContent);
     
