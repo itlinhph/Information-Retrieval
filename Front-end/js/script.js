@@ -39,22 +39,41 @@ $(document).ready(function () {
       
       // show number result
       var numdocs = data.response.numFound ;
-      $("#numdocs").html("Khoảng " + numdocs + " kết quả.") ;
+      var qTime = data.responseHeader.QTime ;
+      $("#numdocs").html('Khoảng ' + numdocs + ' kết quả. ('+qTime/1000+' giây)') ;
 
       // show pagination
-      var strPagination = '<li class="pagili" id="pagex_' + (currentPage - 1) +'"> <a href="#" aria-label="Previous" ><span aria-hidden="true">&laquo;</span></a ></li>' ;
+      var strPagination = '<li class="pagili" id="prev_' + (currentPage - 1) +'"> <a href="#" aria-label="Previous" ><span aria-hidden="true">&laquo;</span></a ></li>' ;
       var pagiSize = Math.floor(numdocs/10) ;
-      if(pagiSize - currentPage > 9) {
-        pagiSize = currentPage +9 ;
+      var startPage =0;
+      var endPage = pagiSize;
+      
+      if(pagiSize - currentPage > 9 && currentPage >4) {
+        startPage = currentPage - 4
+        endPage = currentPage +5 ;
       }
-      for(i=currentPage; i<=pagiSize; i++) {
+      
+      if(currentPage <5 && pagiSize >9 ) {
+        endPage = 9 ;
+      }
+      for(i=startPage; i<=endPage; i++) {
         strPage = String(i+1) ;
         strPagination += '<li class="pagili" id="page_'+ i +'"><a href="#">'+ strPage +'</a></li>' ;
       }
 
-      strPagination += '<li class="pagili" id="pagex_'+(currentPage+1)+'"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>' ;
+      strPagination += '<li class="pagili" id="next_'+(currentPage+1)+'"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>' ;
       $(".pagination").append(strPagination) ;
       $("#page_"+currentPage).addClass("active") ;
+      // console.log(currentPage, pagiSize) ;
+      if(currentPage == 0) {
+        $("#prev_-1").addClass("disabled") ;
+        $("#prev_-1").removeClass("pagili") ;
+      }
+
+      if(currentPage == pagiSize) {
+        $("#next_" +(pagiSize+1)).addClass("disabled");
+        $("#next_"+(pagiSize+1)).removeClass("pagili");
+      }
 
       // show searched docs
       var docData = data.response.docs ;
@@ -67,20 +86,30 @@ $(document).ready(function () {
       for(i=0; i< numRows; i++) {
         doc = docData[i] ;
         id = doc.id ;
-        content = doc.content[0].substr(0, 130) + "...";
-        if (hightlight[id].content[0] != "") {
-          content += hightlight[id].content[0] + "...";
+        
+        // index of hightlight in content
+        var index_hlight = doc.content[0].indexOf(hightlight[id].content[0].substr(0, 15)) ;
+        // console.log("index:" + index_hlight) ;
+        
+        // evalue subContent to show view.
+        var subContent ;
+        if(index_hlight>265 ) {
+          subContent = doc.content[0].substr(0, 233) + "..." + hightlight[id].content[0] + "...";
         }
+        else {
+          var str1 = doc.content[0].substr(0, index_hlight) + hightlight[id].content[0] ;
+          subContent = str1 + doc.content[0].substr(str1.length, 333- str1.length ) + "..." ;
+        }
+        
         idStr = id.replace(".", "_");
         listContent[idStr] = doc.content[0];
         sort_url = doc.url[0];
         if (sort_url.length > 70)
           sort_url = sort_url.substr(0, 69) + "...";
-        // content += "..." + docs.content[0].substr(-60) ;
         var html = '<div><a target="_blank" href="' + doc.url[0] + ' "><span class="doc-title">'
-          + doc.title[0] + ' </span></a> <a href=#"' + idStr + '"><span class="readmore" id="'
-          + idStr + '"> Xem Trước </span></a><p><span class="target-url">'
-          + sort_url + '</span><br>' + content + '</p><hr></div>';
+                    + doc.title[0] + ' </span></a> <a href=#"' + idStr + '"><span class="readmore" id="'
+                    + idStr + '"> Xem Trước </span></a><p><span class="target-url">'
+                    + sort_url + '</span><br>' + subContent + '</p><hr></div>';
 
         $(".content").append(html);
 
@@ -89,7 +118,7 @@ $(document).ready(function () {
       // show read more
       $(".readmore").click(function (e) {
         id_click = e.target.id ;
-        fulltext = listContent[id_click].substr(0,1000) + "..." ;
+        fulltext = listContent[id_click].substr(0,1111) + "..." ;
     
         margintext = $("#" + id_click).offset().top - $(".result").offset().top - $(".result").scrollTop();
         
@@ -101,7 +130,7 @@ $(document).ready(function () {
 
       $(".pagili").click(function(e) {
         var id = $(this).attr('id');
-        id = parseInt(id.substr(-1)) ;
+        id = parseInt(id.substr(5)) ;
         sendRequest(id*10, 10);
         
       }) ;
