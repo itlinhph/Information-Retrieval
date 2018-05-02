@@ -7,9 +7,12 @@
 
   <!-- <link rel='stylesheet' href='css/bootstrap.css'> -->
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
-  
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 </head>
 
@@ -20,17 +23,21 @@
     <div class="row hightlight">
 
       <div class="col-xs-3 col-sm-2 col-md-1">
-        <a href="#"><span class="home">it4853</span></a>
+        <a href="#">
+          <span class="home">it4853</span>
+        </a>
       </div>
 
       <div class="col-xs-8 col-sm-9 col-md-6">
         <form class="input-group" id="form-search">
+          <div class="ui-widget">
             <input type="text" class="form-control" placeholder="Search" id="input-search">
-            <div class="input-group-btn">
-              <button type="submit" class="btn" id="btn-search">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-              </button>
-            </div>
+          </div>
+          <div class="input-group-btn">
+            <button type="submit" class="btn" id="btn-search">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            </button>
+          </div>
         </form>
 
       </div>
@@ -40,28 +47,28 @@
     <div class="row result">
       <div class="col-xs-3 col-sm-2 col-md-1">
       </div>
-      
+
       <div class="col-xs-6 col-sm-7 col-md-6">
         <div id="numdocs"></div>
         <br>
         <div class="content"> </div>
-        
+
       </div>
       <div class="col-xs-3 col-sm-3 col-md-5 fulltext "> </div>
 
     </div>
-    
+
   </div>
 
-  
+
   <!-- Pagination -->
   <nav aria-label="Page navigation">
     <ul class="pagination">
-      
+
     </ul>
   </nav>
   <!-- <br> -->
-  <script src='js/jquery.js'></script>
+  <!-- <script src='js/jquery.js'></script> -->
   <script src="js/script.js"></script>
 
 </body>
