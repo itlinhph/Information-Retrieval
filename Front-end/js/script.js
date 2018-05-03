@@ -18,7 +18,6 @@ $(document).ready(function () {
       jsonpCallback: 'callback'
     }).done(function (data) {
       availableTags = [];
-      console.log(data.response.docs);
       for (let index = 0; index < data.response.docs.length; index++) {
         availableTags.push(data.response.docs[index].title[0].trim());
       }
