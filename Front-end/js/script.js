@@ -8,9 +8,9 @@ $(document).ready(function () {
   $(".fulltext").hide();
   $("#input-search").keyup(function () {
     var form_search = this.value;
-    var url = 'http://192.168.0.156:8888/solr/books/select?'
-      + '&q=book_title:"' + form_search
-      + '"&wt=json&json.wrf=callback';
+    var url = 'http://localhost:8983/solr/IT4853/select?'
+      + '&q=title:' + form_search
+      + '&wt=json&json.wrf=callback';
     $.ajax({
       url: url,
       crossDomain: true,
@@ -20,7 +20,7 @@ $(document).ready(function () {
       availableTags = [];
       console.log(data.response.docs);
       for (let index = 0; index < data.response.docs.length; index++) {
-        availableTags.push(data.response.docs[index].book_title);
+        availableTags.push(data.response.docs[index].title[0].trim());
       }
       $("#input-search").autocomplete({
         source: availableTags
@@ -52,11 +52,11 @@ $(document).ready(function () {
     var listContent = {};
 
     var form_search = $("#input-search").val();
-    var url = 'http://192.168.0.183:8983/solr/IT4853/select?hl.fl=content&hl=on'
+    var url = 'http://localhost:8983/solr/IT4853/select?hl.fl=content&hl=on'
       + '&rows=' + numRows
       + '&start=' + startRow
-      + '&q=content:"' + form_search
-      + '"&wt=json&json.wrf=callback';
+      + '&q=content:' + form_search
+      + '&wt=json&json.wrf=callback';
 
     $.ajax({
       url: url,
@@ -121,7 +121,6 @@ $(document).ready(function () {
 
         // index of hightlight in content
         var index_hlight = doc.content[0].indexOf(hightlight[id].content[0].substr(0, 15));
-        // console.log("index:" + index_hlight) ;
 
         // evalue subContent to show view.
         var subContent;
@@ -139,9 +138,9 @@ $(document).ready(function () {
         if (sort_url.length > 70)
           sort_url = sort_url.substr(0, 69) + "...";
         var html = '<div><a target="_blank" href="' + doc.url[0] + ' "><span class="doc-title">'
-          + doc.title[0] + ' </span></a> <a href=#1><span class="readmore" id="'
+          + doc.title[0].trim() + ' </span></a> <a href=#1><span class="readmore" id="'
           + idStr + '"> Xem Trước </span></a><p><span class="target-url">'
-          + sort_url + '</span><br>' + subContent + '</p><hr></div>';
+          + sort_url + '</span><br>' + subContent.trim() + '</p><hr></div>';
 
         $(".content").append(html);
 
@@ -159,7 +158,7 @@ $(document).ready(function () {
         $(".fulltext").html(fulltext);
 
       });
-
+      // click pagination
       $(".pagili").click(function (e) {
         var id = $(this).attr('id');
         id = parseInt(id.substr(5));
