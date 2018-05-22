@@ -119,6 +119,8 @@ $(document).ready(function () {
         id = doc.id;
 
         // index of hightlight in content
+        if (typeof(doc.content) == 'undefined') 
+          continue;
         var index_hlight = doc.content[0].indexOf(hightlight[id].content[0].substr(0, 15));
 
         // evalue subContent to show view.
