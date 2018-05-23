@@ -8,7 +8,7 @@ $(document).ready(function () {
   $(".fulltext").hide();
   $("#input-search").keyup(function () {
     var form_search = this.value;
-    var url = 'http://localhost:8983/solr/IT4853/select?'
+    var url = 'http://localhost:8983/solr/bangocdata/select?'
       + '&q=title:' + form_search
       + '&wt=json&json.wrf=callback';
     $.ajax({
@@ -21,6 +21,9 @@ $(document).ready(function () {
       for (let index = 0; index < data.response.docs.length; index++) {
         availableTags.push(data.response.docs[index].title[0].trim());
       }
+      availableTags = availableTags.filter(function(item, pos) {
+        return availableTags.indexOf(item) == pos;
+      })
       $("#input-search").autocomplete({
         source: availableTags
       });
@@ -51,7 +54,7 @@ $(document).ready(function () {
     var listContent = {};
 
     var form_search = $("#input-search").val();
-    var url = 'http://localhost:8983/solr/IT4853/select?hl.fl=content&hl=on'
+    var url = 'http://localhost:8983/solr/bangocdata/select?hl.fl=content&hl=on'
       + '&rows=' + numRows
       + '&start=' + startRow
       + '&q=content:' + form_search
