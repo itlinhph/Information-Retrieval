@@ -22,7 +22,7 @@ Open index.html and enjoy it. :)
 
 Contact
 -----------------------
-Copyright by LinhPhan 
+Copyright by LinhPhan <br/>
 Contact me: https://fb.com/deluxe.psk
 
 Video demo: https://youtu.be/lPHcQ3DFoSc
